@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>ورود</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <label>نام کاربری</label>
+    <input type="text" formControlName="username">
+
+    <label>رمز عبور</label>
+    <input type="password" formControlName="password">
+
+    <label>نوع کاربر</label>
+    <select formControlName="role">
+      <option value="student">دانشجو</option>
+      <option value="teacher">معلم</option>
+    </select>
+
+    <button type="submit">ورود</button>
+
+  </form>
+
+  <p style="color:red" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>

@@ -1,0 +1,24 @@
+<header class="relative bg-gradient-to-r from-cyan-400 via-blue-600 to-indigo-400 text-white shadow-md">
+  <!-- بخش بالای هدر -->
+  <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+    <h1 class="text-2xl font-bold">استادیار</h1>
+    <nav class="space-x-8 hidden md:flex">
+      <a href="#" class="hover:text-yellow-200 ">
+        <button class="cursor-pointer" (click)="onclickHome()" >خانه</button>
+      </a>
+      <a href="#" class="hover:text-yellow-200">درباره ما</a>
+      <a href="#" class="hover:text-yellow-200">تماس</a>
+    </nav>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
+
+<nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg w-auto m-auto">
+    <div class="flex justify-around p-4 h-15 ">
+     
+      <button pButton icon="pi pi-envelope"size="large" [rounded]="true" [text]="true" (click)="onClickTodo()" ></button>
+      
+      <button pButton  icon="pi pi-sign-in" size="large" [rounded]="true" [text]="true" (click)="onClickLogIn() "  ></button>
+    </div>
+  </nav>

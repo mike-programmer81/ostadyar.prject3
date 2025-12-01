@@ -1,0 +1,74 @@
+ <div class="survey-container">
+  <h2>{{ survey?.title }}</h2>
+  <p class="desc" *ngIf="survey?.description">{{ survey?.description }}</p>
+
+  <ng-container *ngIf="survey">
+    <div class="options-list">
+      <div class="option-card" *ngFor="let option of survey.options; let i = index">
+        <div class="option-top">
+          <span class="option-text">{{ option }}</span>
+          <button class="vote-btn" (click)="vote(i)">🔘 رأی بده</button>
+        </div>
+
+        <div *ngIf="showResults" class="progress-wrapper">
+          <div class="progress-bar" [style.width.%]="getVotePercent(i)">
+            {{ getVotePercent(i).toFixed(0) }}%
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- <div class="p-4 max-w-3xl mx-auto">
+
+      <h2 class="text-2xl font-semibold mb-4">مشاهده و رأی</h2>
+
+      <ng-container *ngIf="survey; else loading">
+
+        <p-card>
+          <h3 class="text-lg font-bold mb-2">{{ survey.title }}</h3>
+          <p *ngIf="survey.description">{{ survey.description }}</p>
+
+          <div class="mt-4">
+            <h4 class="font-semibold mb-2">گزینه‌ها:</h4>
+
+            <div *ngFor="let opt of survey.options; let i = index" class="mb-2">
+              <button pButton class="p-button-success w-full" (click)="vote(i)">
+                {{ opt }}
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="showResults" class="mt-6 p-3 bg-gray-100 rounded">
+            <h4 class="font-semibold mb-2">نتایج:</h4>
+
+            <div *ngFor="let opt of survey.options; let i = index" class="mb-1 text-gray-700">
+              {{ opt }} — 
+              <span class="font-bold">{{ survey.votes[i] }} رأی</span>
+            </div>
+          </div>
+
+        </p-card>
+
+      </ng-container>
+
+      <ng-template #loading>
+        <p>در حال بارگذاری...</p>
+      </ng-template>
+
+    </div> -->

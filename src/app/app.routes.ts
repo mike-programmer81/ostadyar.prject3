@@ -95,12 +95,12 @@ export const routes: Routes = [
       .then(m => m.SurveyListPage)
 },
 {
-     path:'corse',
+     path:'course',
     component:NavbarComponent,
     children:[
         {
             path:'',
-            loadChildren:() => import('./pages/corse/corse.routes').then(r=>r.corseroutes)
+            loadChildren:() => import('./pages/course/course.routes').then(r=>r.corseroutes)
         }
     ]
 

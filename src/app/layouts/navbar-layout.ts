@@ -35,7 +35,7 @@ export class NavbarComponent {
     this.router.navigate(['/login'])
   }
   onClickCorse(){
-    this.router.navigate(['/corse'])
+    this.router.navigate(['/course'])
   }
 onClickprofile()  {
     this.router.navigate(['/profile'])

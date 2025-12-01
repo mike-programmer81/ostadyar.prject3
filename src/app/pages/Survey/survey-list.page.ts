@@ -15,56 +15,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-survey-list',
   standalone: true,
   imports: [CommonModule, RouterModule, CardModule, ButtonModule, Toast],
-  template: `
-    <div class="p-4 max-w-5xl mx-auto">
-
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">لیست نظرسنجی‌ها</h2>
-
-        <button   pButton  label="ایجاد نظرسنجی جدید" class="p-button-success"(click)="goToCreate()"> </button>
-      </div>
-
-      <div *ngIf="surveys$ | async as surveys; else loading">
-        
-        <ng-container *ngIf="surveys.length > 0; else noSurveys"> 
-
-          <div *ngFor="let s of surveys" class="mb-4">
-            <p-card>
-              <div class="flex justify-between items-start">
-
-                <div>
-                  <h3 class="text-lg font-semibold mb-1">{{ s.title }}</h3>
-                  <p class="text-sm text-gray-600" *ngIf="s.description">
-                    {{ s.description }}
-                  </p>
-                </div>
-
-                <button 
-                  pButton 
-                  type="button" 
-                  label="مشاهده / رأی"
-                  class="p-button-outlined p-button-success"
-                  (click)="openSurvey(s.id)">
-                </button>
-
-              </div>
-            </p-card>
-          </div>
-
-        </ng-container>
-
-      </div>
-
-      <ng-template #loading>
-        <p>در حال بارگذاری...</p>
-      </ng-template>
-
-      <ng-template #noSurveys>
-        <p class="text-gray-600">هنوز هیچ نظرسنجی‌ای ثبت نشده است.</p>
-      </ng-template>
-
-    </div>
-  `,
+  templateUrl: `survey.list.pages.html`,
   providers: [MessageService]
 })
 export class SurveyListPage {

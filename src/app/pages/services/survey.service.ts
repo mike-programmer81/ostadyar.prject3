@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Survey } from '../../models/survey.model';
 import { Observable, of } from 'rxjs';
+import { Survey } from '../../models/survey.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,33 +9,34 @@ export class SurveyService {
 
   private surveys: Survey[] = [];
 
-  createSurvey(survey: Omit<Survey, 'id'>) {
-    const newSurvey: Survey = {
+  // ساختن نظرسنجی – فقط ورودی لازم رو بگیره
+  createSurvey(input: { title: string; description?: string; options: string[] }): void {
+    const survey: Survey = {
       id: crypto.randomUUID(),
-      ...survey
+      title: input.title.trim(),
+      description: input.description?.trim(),
+      options: input.options,
+      votes: input.options.map(() => 0)
     };
-    // اضافه کردن فیلد votes به صورت آرایه بر اساس تعداد گزینه‌ها
-    newSurvey.votes = newSurvey.options.map(() => 0);
-    this.surveys.push(newSurvey);
+
+    this.surveys.push(survey);
   }
 
-  // برگرداندن همه نظرسنجی‌ها به صورت Observable
   getSurveys(): Observable<Survey[]> {
     return of(this.surveys);
   }
 
-  // برگرداندن یک نظرسنجی تکی به صورت Observable
   getSurveyById(id: string): Observable<Survey | undefined> {
     const survey = this.surveys.find(s => s.id === id);
     return of(survey);
   }
 
-  // رأی دادن به یک گزینه
-  vote(id: string, optionIndex: number): Observable<void> {
+  vote(id: string, optionIndex: number): Observable<Survey | undefined> {
     const survey = this.surveys.find(s => s.id === id);
-    if (survey && survey.votes && survey.votes[optionIndex] !== undefined) {
+    if (survey && survey.votes[optionIndex] != null) {
       survey.votes[optionIndex]++;
     }
-    return of(undefined);
+    // برای راحتی، خود survey آپدیت‌شده رو هم برگردون
+    return of(survey);
   }
 }

@@ -67,10 +67,7 @@ export const routes: Routes = [
 
 
   // هر مسیر اشتباه → login
-  {
-    path: '**',
-    redirectTo: 'login'
-  },
+  
   {
   path: 'survey/:id',
   loadComponent: () =>
@@ -96,6 +93,26 @@ export const routes: Routes = [
   loadComponent: () =>
     import('./pages/Survey/survey-list.page')
       .then(m => m.SurveyListPage)
+},
+{
+     path:'corse',
+    component:NavbarComponent,
+    children:[
+        {
+            path:'',
+            loadChildren:() => import('./pages/corse/corse.routes').then(r=>r.corseroutes)
+        }
+    ]
+
+},{
+     path:'profile',
+    component:NavbarComponent,
+    children:[
+        {
+            path:'',
+            loadChildren:() => import('./pages/profile/profile.routes').then(r=>r.profileRautes)
+        }
+    ]
 }
 
 

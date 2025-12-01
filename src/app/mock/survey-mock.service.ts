@@ -16,12 +16,7 @@ export class SurveyMockService {
 
   // دیتابیس FAKE داخل حافظه
   private surveys: MockSurvey[] = [
-    {
-      id: 1,
-      title: 'بهترین ساعت برای برگزاری امتحان ریاضی',
-      options: ['8 صبح', '10 صبح', '2 بعد از ظهر'],
-      votes: [10, 15, 5]
-    }
+ 
   ];
 
   // دریافت لیست نظرسنجی‌ها

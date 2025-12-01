@@ -1,0 +1,111 @@
+<div class="max-w-5xl mx-auto p-6">
+
+  <h2 class="text-3xl text-right mr-3 font-bold mb-6 text-gray-800">دروس استاد</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <p-card *ngFor="let course of courses" class="shadow-lg border border-gray-200 text-right ">
+      <ng-template pTemplate="header">
+        <h3 class="text-xl mr-3 font-bold mt-4 text-indigo-600">{{ course.name }}</h3>
+      </ng-template>
+
+      <p class="text-gray-600 mb-4">کد درس: {{ course.code }}</p>
+
+      <button 
+        pButton 
+        label="مشاهده اطلاعات درس"
+        icon="pi pi-chevron-left"
+        class="p-button-outlined p-button-info"
+        (click)="openCourse(course)">
+      </button>
+    </p-card>
+
+  </div>
+</div>
+
+
+<!-- Dialog برای انتخاب آپشن -->
+<p-dialog 
+  [(visible)]="courseDialog" 
+  [modal]="true" 
+  [style]="{width: '400px'}" 
+  header="انتخاب عملیات برای درس">
+
+  <p class="text-lg font-semibold mb-4 text-gray-700 text-center">
+    {{ selectedCourse?.name }}
+  </p>
+
+  <div class="flex flex-col gap-4">
+
+    <button 
+      pButton 
+      label="لیست دانشجویان"
+      icon="pi pi-users"
+      class="p-button-success w-full"
+      (click)="openStudents()">
+    </button>
+
+    <button 
+      pButton 
+      label="تاریخ‌های امتحانی"
+      icon="pi pi-calendar"
+      class="p-button-warning w-full"
+      (click)="openExams()">
+    </button>
+
+  </div>
+</p-dialog>
+
+
+<!-- Dialog لیست دانشجوها -->
+<p-dialog 
+  [(visible)]="studentsDialog" 
+  header="دانشجویان درس" 
+  [modal]="true" 
+  [style]="{width: '600px'}">
+
+  <p-table [value]="selectedCourse?.students" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>نام</th>
+        <th>شماره دانشجویی</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-st>
+      <tr>
+        <td>{{ st.name }}</td>
+        <td>{{ st.id }}</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</p-dialog>
+
+
+<!-- Dialog تاریخ‌های امتحان -->
+<p-dialog 
+  [(visible)]="examsDialog" 
+  header="تاریخ‌های امتحانی"  
+  [modal]="true" 
+  [style]="{width: '600px'}">
+
+  <p-table [value]="selectedCourse?.exams" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>تاریخ</th>
+        <th>نوع امتحان</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-ex>
+      <tr>
+        <td>{{ ex.date }}</td>
+        <td>{{ ex.type }}</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</p-dialog>

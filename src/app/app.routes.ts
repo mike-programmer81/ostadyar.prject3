@@ -1,25 +1,24 @@
-
 import { Routes } from '@angular/router';
 import { NavbarComponent } from './layouts/navbar-layout';
 // import { AuthGuard } from './pages/guard/auth.guard';
 
 export const routes: Routes = [
 
-  // وقتی لود میشه → اگر لاگین نکرده باشد = بفرست login
+  // ---------------------- Default redirect ----------------------
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home'
   },
 
-  // صفحه Login (بدون Navbar)
+  // ---------------------- Login (بدون Navbar) -------------------
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/login copy/login.component').then(c => c.LoginPage)
+      import('./pages/login copy/login.component').then(c => c.LoginComponent)
   },
 
-  // Home → فقط وقتی اجازه می‌ده وارد شی
+  // ---------------------- Home ----------------------
   {
     path: 'home',
     // canActivate: [AuthGuard],
@@ -32,88 +31,78 @@ export const routes: Routes = [
       }
     ]
   },
+
+  // ---------------------- Room Reservation ----------------------
   {
-        path: 'RoomReservation',
-        component: NavbarComponent,
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./pages/RoomReservation/Room.routes').then(r => r.RoomRoutes)
-          }
-        ]
+    path: 'RoomReservation',
+    component: NavbarComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/RoomReservation/Room.routes').then(r => r.RoomRoutes)
+      }
+    ]
+  },
+
+  // ---------------------- Survey (نسخه نهایی و منظم) ----------------------
+  {
+    path: 'survey',
+    component: NavbarComponent,
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/Survey/survey-list.page').then(m => m.SurveyListPage)
       },
       {
-        path: 'SurveyComponent',
-        component: NavbarComponent,
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./pages/Survey/Survey.routes').then(r => r.SurveyRoutes)
-          }
-        ]
+        path: 'create',
+        loadComponent: () =>
+          import('./pages/Survey/survey-create.page').then(m => m.SurveyCreatePage)
       },
       {
-  path: 'survey',
-  // canActivate: [AuthGuard],
-  component: NavbarComponent,   // یا layout مد نظرت
-  children: [
-    { path: '', loadComponent: () => import('./pages/Survey/survey-list.page').then(m => m.SurveyListPage) },
-    { path: 'create', loadComponent: () => import('./pages/Survey/survey-create.page').then(m => m.SurveyCreatePage) },
-    { path: ':id', loadComponent: () => import('./pages/Survey/survey-detail.page').then(m => m.SurveyDetailPage) },
-  ]
-},
+        path: ':id',
+        loadComponent: () =>
+          import('./pages/Survey/survey-detail.page').then(m => m.SurveyDetailPage)
+      },
+      {
+        path: 'result/:id',
+        loadComponent: () =>
+          import('./pages/survey-result/survey-result.page').then(m => m.SurveyResultPage)
+      }
+    ]
+  },
 
-
-  // هر مسیر اشتباه → login
-  
+  // ---------------------- Courses ----------------------
   {
-  path: 'survey/:id',
-  loadComponent: () =>
-    import('./pages/Survey/survey-detail.page')
-      .then(m => m.SurveyDetailPage)
-}
-,
-
-{
-  path: 'survey/result/:id',
-  loadComponent: () =>
-    import('./pages/survey-result/survey-result.page')
-      .then(m => m.SurveyResultPage)
-},
-{
-  path: 'survey/create',
-  loadComponent: () =>
-    import('./pages/Survey/survey-create.page')
-      .then(m => m.SurveyCreatePage)
-},
-{
-  path: 'survey/list',
-  loadComponent: () =>
-    import('./pages/Survey/survey-list.page')
-      .then(m => m.SurveyListPage)
-},
-{
-     path:'course',
-    component:NavbarComponent,
-    children:[
-        {
-            path:'',
-            loadChildren:() => import('./pages/course/course.routes').then(r=>r.corseroutes)
-        }
+    path: 'course',
+    component: NavbarComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/course/course.routes').then(r => r.corseroutes)
+      }
     ]
+  },
 
-},{
-     path:'profile',
-    component:NavbarComponent,
-    children:[
-        {
-            path:'',
-            loadChildren:() => import('./pages/profile/profile.routes').then(r=>r.profileRautes)
-        }
+  // ---------------------- Profile ----------------------
+  {
+    path: 'profile',
+    component: NavbarComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/profile/profile.routes').then(r => r.profileRautes)
+      }
     ]
-}
+  },
 
+  // ---------------------- 404 → login ----------------------
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 
 ];

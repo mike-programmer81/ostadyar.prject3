@@ -1,32 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8081/auth';
+  private baseUrl = 'https://cloth-conviction-sticks-gamma.trycloudflare.com';
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string, role: string): Observable<any> {
+  // ---------------------------------------------------------------------
+  // ✅ گرفتن Token از localStorage
+  // ---------------------------------------------------------------------
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
-    const endpoint =
-      role === 'student'
-        ? `${this.baseUrl}/login-student`
-        : `${this.baseUrl}/login-teacher`;
+  // ---------------------------------------------------------------------
+  // 🔐 LOGIN → درخواست ورود و ذخیره Token
+  // ---------------------------------------------------------------------
+  login(
+    username: string,
+    password: string,
+    role: 'teacher' | 'student'
+  ): Observable<{ token: string }> {
 
-    return this.http.post(
-      endpoint,
-      { username, password },
-      { withCredentials: true }
+    return this.http.post<{ token: string }>(
+      `${this.baseUrl}/auth/login`,
+      { username, password, role }
+    ).pipe(
+      tap(res => {
+        localStorage.setItem('token', res.token);
+      })
     );
   }
 
-  // چون توکن در Cookie هست، این فقط بررسی می‌کنه که کوکی موجود هست یا نه
-  isLoggedIn(): boolean {
-    return document.cookie.includes('accessToken=');
+  // ---------------------------------------------------------------------
+  // 🎓 دریافت درس‌های استاد با Authorization Token
+  // ---------------------------------------------------------------------
+  getMyCourses(): Observable<any> {
+    const token = this.getToken();
+
+    let headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(
+      `${this.baseUrl}/api/teachers/my-courses`,
+      { headers }
+    );
   }
 }

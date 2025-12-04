@@ -10,18 +10,16 @@
 
       <!-- منوی اصلی -->
       <nav class="hidden md:flex items-center gap-6">
-        <a class="hover:text-yellow-200 cursor-pointer" (click)="onclickHome()">خانه</a>
+        
         <a class="hover:text-yellow-200 cursor-pointer">درباره ما</a>
         <a class="hover:text-yellow-200 cursor-pointer">تماس</a>
+        <a class="hover:text-yellow-200 cursor-pointer" (click)="onclickHome()">خانه</a>
       </nav>
 
       <!-- دکمه پروفایل PrimeNG -->
       
-        <button  pButton  class="-mr-30 p-button-rounded p-button-text text-white hover:bg-blue-600" (click)="visibleSidebar = true"> <i class="pi pi-bars" style="color: white"></i></button>
-     
-
+        <button pButton class="p-button-rounded p-button-text text-white hover:bg-blue-600 -mr-30"(click)="visibleSidebar = true"><i class="pi pi-bars" style="color: white"></i></button>
     </div>
-
   </div>
 </header>
 
@@ -40,6 +38,7 @@
 
     <button pButton label="مشاهده پروفایل" class="p-button-info" (click)="onClickprofile()"></button>
     <button pButton label="درس‌های من" class="p-button-info" (click)="onClickCorse()" ></button>
+    <button pButton label="ایجاد امتحان" class="p-button-info" (click)="onClickReservation()" ></button>
     <button pButton label="خروج" class="p-button-danger"></button>
   </div>
 

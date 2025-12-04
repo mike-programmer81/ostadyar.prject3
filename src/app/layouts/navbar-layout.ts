@@ -40,4 +40,7 @@ export class NavbarComponent {
 onClickprofile()  {
     this.router.navigate(['/profile'])
   }
+  onClickReservation() {
+     this.router.navigate(['/RoomReservation'])
+  }
 }

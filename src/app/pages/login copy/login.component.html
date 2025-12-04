@@ -1,23 +1,32 @@
-<div class="container">
-  <h2>ورود</h2>
+<div dir="rtl" class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="bg-white p-8 rounded-xl shadow-lg w-96 text-right">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">
+      ورود به سامانه
+    </h2>
 
-    <label>نام کاربری</label>
-    <input type="text" formControlName="username">
-
-    <label>رمز عبور</label>
-    <input type="password" formControlName="password">
-
-    <label>نوع کاربر</label>
-    <select formControlName="role">
+    <label>نوع کاربر:</label>
+    <select [(ngModel)]="role" class="w-full border rounded p-2 mb-4">
+      <option value="teacher">استاد</option>
       <option value="student">دانشجو</option>
-      <option value="teacher">معلم</option>
     </select>
 
-    <button type="submit">ورود</button>
+    <label>نام کاربری:</label>
+    <input type="text" [(ngModel)]="username"
+           class="w-full border rounded p-2 mb-4"/>
 
-  </form>
+    <label>رمز عبور:</label>
+    <input type="password" [(ngModel)]="password"
+           class="w-full border rounded p-2 mb-4"/>
 
-  <p style="color:red" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <button (click)="login()"
+            class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+      ورود
+    </button>
+
+    <p *ngIf="errorMsg" class="text-red-600 text-center mt-3">
+      {{ errorMsg }}
+    </p>
+
+  </div>
 </div>

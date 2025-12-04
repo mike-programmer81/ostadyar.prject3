@@ -4,9 +4,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-
+import { HttpClient } from '@angular/common/http';
 import { Course } from '../../models/course.model';
-import { CoursesService } from '../services/course.service';
 
 @Component({
   selector: 'app-courses',
@@ -23,21 +22,30 @@ export class CoursesComponent implements OnInit {
   selectedCourse: Course | null = null;
   courses: Course[] = [];
 
-  constructor(private coursesService: CoursesService) {}   // ✔ درست شد
+  // 🟦 API اصلی
+  private apiBase = "https://cheap-tones-intensive-wives.trycloudflare.com/api";
+
+  // 🟩 شناسۀ استاد (PathVariable)
+  teacherId = 1; // ← می‌تونی از login مقدار بدی
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadCourses();
   }
 
+  // 📌 گرفتن لیست دروس استاد از سرور
   loadCourses(): void {
-    this.coursesService.getCourses().subscribe({
-      next: (data: Course[]) => {
-        this.courses = data;
-      },
-      error: (err: any) => {
-        console.error('Error loading courses:', err);
-      }
-    });
+    this.http.get<Course[]>(`${this.apiBase}/teachers/${this.teacherId}/courses`)
+      .subscribe({
+        next: (data) => {
+          this.courses = data;
+          console.log("📘 لیست دروس دریافت شد:", data);
+        },
+        error: (err) => {
+          console.error("❌ خطا در دریافت دروس:", err);
+        }
+      });
   }
 
   openCourse(course: Course) {

@@ -1,30 +1,41 @@
-<div class="max-w-5xl mx-auto p-6">
+<div dir="rtl" class="max-w-6xl mx-auto p-6 select-none">
 
-  <h2 class="text-3xl text-right mr-3 font-bold mb-6 text-gray-800">دروس استاد</h2>
+  <h2 class="text-3xl text-right mr-3 font-extrabold mb-8 text-indigo-700">
+    📘 دروس استاد
+  </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- کارت دروس -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-    <p-card *ngFor="let course of courses" class="shadow-lg border border-gray-200 text-right">
-      <ng-template pTemplate="header">
-        <h3 class="text-xl mr-3 font-bold mt-4 text-indigo-600">
-          {{ course.courseName }}
-        </h3>
-      </ng-template>
+    <div
+      *ngFor="let course of courses"
+      class="bg-white border border-gray-200 rounded-xl shadow-md p-5 cursor-pointer transition transform hover:-translate-y-1 hover:shadow-lg"
+    >
 
-      <p class="text-gray-600 mb-4">کد درس: {{ course.courseCode }}</p>
+      <h3 class="text-xl font-bold text-indigo-600 mb-2 text-right">
+        {{ course.courseName }}
+      </h3>
 
-      <p class="text-gray-700 mb-2">
-        استاد: {{ course.teacher.firstName }} {{ course.teacher.lastName }}
+      <p class="text-gray-600 text-right mb-2">
+        کد درس: <span class="font-semibold">{{ course.courseCode }}</span>
+      </p>
+
+      <p class="text-gray-700 text-right mb-4">
+        استاد:
+        <span class="font-semibold">
+          {{ course.teacher.firstName }} {{ course.teacher.lastName }}
+        </span>
       </p>
 
       <button
         pButton
         label="مشاهده اطلاعات درس"
         icon="pi pi-chevron-left"
-        class="p-button-outlined p-button-info w-full"
+        class="p-button-rounded p-button-info w-full"
         (click)="openCourse(course)">
       </button>
-    </p-card>
+
+    </div>
 
   </div>
 </div>
@@ -33,47 +44,43 @@
 <!-- Dialog: انتخاب عملیات -->
 <p-dialog
   [(visible)]="courseDialog"
+  header="انتخاب عملیات"
   [modal]="true"
-  [style]="{width: '420px'}"
-  header="انتخاب عملیات">
+  [style]="{width: '400px'}"
+  class="text-center"
+>
 
-  <p class="text-lg font-semibold mb-4 text-gray-700 text-center">
+  <h3 class="text-lg font-bold text-indigo-700 mb-4">
     {{ selectedCourse?.courseName }}
-  </p>
+  </h3>
 
   <div class="flex flex-col gap-4">
-
     <button
       pButton
-      label="لیست دانشجویان"
-      icon="pi pi-users"
+      label="📚 لیست دانشجویان"
       class="p-button-success w-full"
       (click)="openStudents()">
     </button>
 
     <button
       pButton
-      label="تاریخ‌ های امتحانی"
-      icon="pi pi-calendar"
+      label="📝 تاریخ‌های امتحانی"
       class="p-button-warning w-full"
       (click)="openExams()">
     </button>
-
   </div>
+
 </p-dialog>
 
 
-
-<!-- Dialog: لیست دانشجوها -->
+<!-- Dialog لیست دانشجوها -->
 <p-dialog
   [(visible)]="studentsDialog"
-  header="دانشجویان درس"
+  header="دانشجویان"
   [modal]="true"
-  [style]="{width: '600px'}">
+  [style]="{width: '650px'}">
 
-  <p-table [value]="selectedCourse?.students || []">
-
-
+  <p-table [value]="selectedCourse?.students ?? []">
     <ng-template pTemplate="header">
       <tr>
         <th>نام</th>
@@ -89,22 +96,25 @@
         <td>{{ st.studentNumber }}</td>
       </tr>
     </ng-template>
-
   </p-table>
+
 </p-dialog>
 
 
-
-<!-- Dialog: لیست امتحانات -->
+<!-- Dialog لیست امتحان‌ها -->
 <p-dialog
+  [(visible)]="examsDialog"
+  header="تاریخ‌های امتحانی"
+  [modal]="true"
+  [style]="{width: '750px'}">
+
+  <p-dialog
   [(visible)]="examsDialog"
   header="تاریخ‌ های امتحانی"
   [modal]="true"
   [style]="{width: '650px'}">
 
-  <p-table [value]="selectedCourse?.exams || []">
-
-
+  <p-table [value]="selectedCourse?.exams ?? []">
     <ng-template pTemplate="header">
       <tr>
         <th>نام امتحان</th>
@@ -122,7 +132,9 @@
         <td>{{ ex.room.name }} (ظرفیت: {{ ex.room.capacity }})</td>
       </tr>
     </ng-template>
-
   </p-table>
+
+</p-dialog>
+
 
 </p-dialog>

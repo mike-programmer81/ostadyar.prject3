@@ -1,6 +1,5 @@
 export interface Course {
-code: any;
-name: any;
+
   id: number;
   courseName: string;
   courseCode: string;
@@ -21,7 +20,7 @@ name: any;
   exams: {
     id: number;
     name: string;
-    startDate: string;
+    startDate: string;   // API string تاریخ برمی‌گرداند
     endDate: string;
     room: {
       id: number;
